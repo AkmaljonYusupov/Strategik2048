@@ -1,17 +1,14 @@
 /* Umumiy sahifa stilizatsiyasi */
 body {
 	margin: 0;
-	background: linear-gradient(to bottom, #f3e7e9, #e3eeff);
-	/* Gradient fon */
+	background: linear-gradient(to bottom, #f3e7e9, #e3eeff); /* Gradient fon */
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	font-family: 'Inter', sans-serif;
-	/* Shrift oilasi */
+	font-family: 'Inter', sans-serif; /* Shrift oilasi */
 }
-
 /* O'yin konteyneri */
 #gameContainer {
 	max-width: 600px;
@@ -19,113 +16,90 @@ body {
 	padding: 15px;
 	text-align: center;
 }
-
 /* O'yin taxtasi (4x4 grid) */
 #gameBoard {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	/* 4 ta ustun */
+	grid-template-columns: repeat(4, 1fr); /* 4 ta ustun */
 	gap: 12px;
-	background: #bbada0;
-	/* Taxta foni */
+	background: #bbada0; /* Taxta foni */
 	padding: 12px;
 	border-radius: 12px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	/* Soyali effekt */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soyali effekt */
 }
-
 /* Har bir plitka (tile) stilizatsiyasi */
 .tile {
 	width: 100%;
-	aspect-ratio: 1;
-	/* Kvadrat shakl */
+	aspect-ratio: 1; /* Kvadrat shakl */
 	background: #cdc1b4;
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: clamp(20px, 5vw, 28px);
-	/* Moslashuvchan shrift */
+	font-size: clamp(20px, 5vw, 28px); /* Moslashuvchan shrift */
 	font-weight: 500;
 	color: #776e65;
 	transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease,
-		box-shadow 0.2s ease;
-	/* Animatsiyalar */
+		box-shadow 0.2s ease; /* Animatsiyalar */
 	text-align: center;
 	line-height: 1;
 }
-
 /* Plitka qiymatlariga mos ranglar */
 .tile[data-value='0'] {
 	background: #cdc1b4;
 	color: #cdc1b4;
 }
-
 .tile[data-value='2'] {
 	background: #eee4da;
 	color: #776e65;
 }
-
 .tile[data-value='4'] {
 	background: #ede0c8;
 	color: #776e65;
 }
-
 .tile[data-value='8'] {
 	background: #f2b179;
 	color: #f9f6f2;
 }
-
 .tile[data-value='16'] {
 	background: #f59563;
 	color: #f9f6f2;
 }
-
 .tile[data-value='32'] {
 	background: #f67c5f;
 	color: #f9f6f2;
 }
-
 .tile[data-value='64'] {
 	background: #f65e3b;
 	color: #f9f6f2;
 }
-
 .tile[data-value='128'] {
 	background: #edcf72;
 	color: #f9f6f2;
 }
-
 .tile[data-value='256'] {
 	background: #edcc61;
 	color: #f9f6f2;
 }
-
 .tile[data-value='512'] {
 	background: #edc850;
 	color: #f9f6f2;
 }
-
 .tile[data-value='1024'] {
 	background: #edc53f;
 	color: #f9f6f2;
 }
-
 .tile[data-value='2048'] {
 	background: #edc22e;
 	color: #f9f6f2;
 }
-
 /* Yangi va birlashgan plitkalar uchun animatsiyalar */
 .tile.new {
 	transform: scale(0.1);
 	animation: pop 0.2s forwards;
 }
-
 .tile.merged {
 	animation: merge 0.3s forwards, glow 0.3s forwards;
 }
-
 /* Ochko va eng yuqori natija ko'rsatkichi */
 #info {
 	display: flex;
@@ -135,7 +109,6 @@ body {
 	color: #1a202c;
 	font-weight: 500;
 }
-
 /* O'yin tugash oynasi */
 #gameOver {
 	display: none;
@@ -151,50 +124,37 @@ body {
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 	font-size: clamp(20px, 4vw, 26px);
 }
-
 /* Ma'lumot tugmasi (fixed, dumaloq) */
 .fixed-info-btn {
 	position: fixed;
 	bottom: 20px;
-	left: 20px;
-	/* Chap past burchak */
+	left: 20px; /* Chap past burchak */
 	z-index: 1000;
 	width: 60px;
 	height: 60px;
-	border-radius: 50%;
-	/* Dumaloq shakl */
+	border-radius: 50%; /* Dumaloq shakl */
 	padding: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 1.6rem;
-	/* Ikonka o'lchami */
+	font-size: 1.6rem; /* Ikonka o'lchami */
 	transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .fixed-info-btn:hover {
-	transform: scale(1.1);
-	/* Hoverda kattalashadi */
+	transform: scale(1.1); /* Hoverda kattalashadi */
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 /* Offcanvas stilizatsiyasi */
 .offcanvas {
-	background: linear-gradient(to bottom, #f7fafc, #edf2f7);
-	/* Gradient fon */
-	border-radius: 12px 0 0 12px;
-	/* O'ngdan ochilish uchun radius */
+	background: linear-gradient(to bottom, #f7fafc, #edf2f7); /* Gradient fon */
+	border-radius: 12px 0 0 12px; /* O'ngdan ochilish uchun radius */
 	padding: 20px;
 	box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-	animation: slide-in-right 0.3s ease-out;
-	/* Ochilish animatsiyasi */
+	animation: slide-in-right 0.3s ease-out; /* Ochilish animatsiyasi */
 }
-
 .offcanvas-header {
-	border-bottom: 1px solid #e2e8f0;
-	/* Sarlavha ostidagi chiziq */
+	border-bottom: 1px solid #e2e8f0; /* Sarlavha ostidagi chiziq */
 }
-
 .offcanvas-title {
 	font-size: clamp(18px, 3vw, 22px);
 	color: #1a202c;
@@ -202,150 +162,97 @@ body {
 	align-items: center;
 	gap: 8px;
 }
-
 .offcanvas-body {
 	display: flex;
 	flex-direction: column;
-	gap: 18px;
-	/* Elementlar orasidagi masofa */
+	gap: 18px; /* Elementlar orasidagi masofa */
 	font-size: clamp(14px, 2.5vw, 16px);
 	color: #1a202c;
 	text-align: center;
 }
-
 .offcanvas a {
 	color: #2b6cb0;
 	text-decoration: none;
 	transition: color 0.2s;
 }
-
 .offcanvas a:hover {
 	color: #1a4971;
 	text-decoration: underline;
 }
-
 .offcanvas i {
 	margin-right: 8px;
 	font-size: 1.3rem;
 	transition: transform 0.2s, color 0.2s;
 }
-
 .offcanvas i:hover {
 	transform: scale(1.15);
 	color: #2b6cb0;
 }
-
 /* Kontakt elementlari konteyneri */
 .contact-container {
-	position: relative;
 	display: inline-flex;
 	align-items: center;
 	padding: 6px 10px;
 	transition: background 0.2s;
 	border-radius: 6px;
 }
-
 .contact-container:hover {
 	background: rgba(0, 0, 0, 0.05);
 }
-
-.data-mobile-hidden {
-	transition: opacity 0.3s, transform 0.3s;
-}
-
 /* Mobil ekranlar uchun sozlamalar */
 @media (max-width: 400px) {
 	#gameBoard {
 		gap: 8px;
 		padding: 10px;
 	}
-
 	.tile {
 		font-size: clamp(16px, 4vw, 20px);
 	}
-
 	#info {
 		font-size: clamp(16px, 3vw, 18px);
 	}
-
 	.fixed-info-btn {
 		width: 50px;
-		height: 50px;
-		/* Mobil uchun kichikroq */
+		height: 50px; /* Mobil uchun kichikroq */
 		font-size: 1.4rem;
 	}
-
 	.offcanvas-body {
 		font-size: clamp(12px, 2vw, 14px);
 		gap: 16px;
 	}
-
 	.offcanvas i {
 		font-size: 1.1rem;
 	}
-
-	.data-mobile-hidden {
-		display: none;
-		/* Mobil ekranlarda matn yashiriladi */
-	}
-
-	.contact-container:hover .data-mobile-hidden,
-	.contact-container:active .data-mobile-hidden {
-		display: inline;
-		position: absolute;
-		background: rgba(26, 32, 44, 0.95);
-		color: #fff;
-		padding: 8px 12px;
-		border-radius: 8px;
-		left: 40px;
-		z-index: 10;
-		opacity: 1;
-		transform: scale(1);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	}
-
-	.contact-container .data-mobile-hidden {
-		opacity: 0;
-		transform: scale(0.8);
-	}
 }
-
 /* Animatsiyalar */
 @keyframes slide-in-right {
 	from {
 		transform: translateX(100%);
 	}
-
 	to {
 		transform: translateX(0);
 	}
 }
-
 @keyframes pop {
 	0% {
 		transform: scale(0.1);
 	}
-
 	100% {
 		transform: scale(1);
 	}
 }
-
 @keyframes merge {
 	0% {
 		transform: scale(1.2);
 	}
-
 	100% {
 		transform: scale(1);
 	}
 }
-
 @keyframes glow {
 	0% {
 		box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 	}
-
 	100% {
 		box-shadow: 0 0 0 rgba(255, 255, 255, 0);
 	}

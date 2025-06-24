@@ -54,6 +54,7 @@ function initBoard() {
 	gameBoard.innerHTML = '' // Taxtani tozalash
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
+			board[i][j] = 0 // Taxtani nollar bilan to'ldirish
 			const tile = document.createElement('div')
 			tile.classList.add('tile')
 			tile.dataset.value = board[i][j]
@@ -61,6 +62,10 @@ function initBoard() {
 			gameBoard.appendChild(tile) // Plitkalarni qo'shish
 		}
 	}
+	score = 0 // Ochko noldan boshlanadi
+	scoreElement.textContent = score
+	gameOver = false // O'yin tugamagan
+	gameOverDisplay.style.display = 'none' // Tugash oynasini yashirish
 	addRandomTile() // 2 ta tasodifiy plitka qo'shish
 	addRandomTile()
 	updateBoard()
@@ -75,8 +80,7 @@ function addRandomTile() {
 		}
 	}
 	if (emptyCells.length > 0) {
-		const { i: i, j } =
-			emptyCells[Math.floor(Math.random() * emptyCells.length)]
+		const { i, j } = emptyCells[Math.floor(Math.random() * emptyCells.length)]
 		board[i][j] = Math.random() < 0.9 ? 2 : 4 // 90% 2, 10% 4
 	}
 }
@@ -294,16 +298,7 @@ document.addEventListener('touchend', e => {
 
 // Qayta boshlash tugmasi
 restartBtn.addEventListener('click', () => {
-	score = 0
-	gameOver = false
-	scoreElement.textContent = score
-	gameOverDisplay.style.display = 'none'
-	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < 4; j++) {
-			board[i][j] = 0 // Taxtani tozalash
-		}
-	}
-	initBoard() // O'yinni qayta boshlash
+	initBoard() // Sahifani yangilamasdan o'yinni qayta boshlash
 })
 
 initBoard() // O'yinni boshlash
