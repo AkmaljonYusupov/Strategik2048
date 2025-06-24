@@ -189,7 +189,7 @@ body {
 	/* Gradient fon */
 	border-radius: 12px 0 0 12px;
 	/* O'ngdan ochilish uchun radius */
-	padding: 20px;
+	padding: 8px;
 	box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
 	animation: slide-in-right 0.3s ease-out;
 	/* Ochilish animatsiyasi */
@@ -261,7 +261,7 @@ body {
 		/* To'liq ekran eni */
 		height: 100vh;
 		/* To'liq ekran balandligi */
-		padding: 10px;
+		padding: 5px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -303,14 +303,16 @@ body {
 	}
 
 	.offcanvas {
-		width: 80%;
+		width: 90% !important;
 		/* Mobil ekranlarda 80% eni */
 	}
 
 	.offcanvas-body {
+		margin-top: 20px;
 		font-size: clamp(14px, 2.5vw, 16px);
 		/* Mobil uchun kattalashtirilgan matn */
-		gap: 16px;
+		gap: 30px;
+		padding: 0px;
 	}
 
 	.offcanvas i {
