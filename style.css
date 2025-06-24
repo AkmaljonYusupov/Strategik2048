@@ -1,6 +1,7 @@
 /* Umumiy sahifa stilizatsiyasi */
 body {
 	margin: 0;
+	padding: 0;
 	background: linear-gradient(to bottom, #f3e7e9, #e3eeff);
 	/* Gradient fon */
 	min-height: 100vh;
@@ -12,6 +13,8 @@ body {
 	/* Shrift oilasi */
 	overscroll-behavior: none;
 	/* Mobil scroll yangilanishini o'chirish */
+	overflow: hidden;
+	/* To'liq ekran rejimi uchun */
 }
 
 /* O'yin konteyneri */
@@ -253,17 +256,40 @@ body {
 
 /* Mobil ekranlar uchun sozlamalar */
 @media (max-width: 400px) {
-	#gameBoard {
-		gap: 8px;
+	#gameContainer {
+		width: 100vw;
+		/* To'liq ekran eni */
+		height: 100vh;
+		/* To'liq ekran balandligi */
 		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#gameBoard {
+		gap: 6px;
+		padding: 6px;
+		width: 100%;
+		/* To'liq eni */
+		max-width: 360px;
+		/* Maksimal eni cheklash */
 	}
 
 	.tile {
-		font-size: clamp(16px, 4vw, 20px);
+		font-size: clamp(14px, 4vw, 18px);
+		/* Mobil uchun kichikroq shrift */
 	}
 
 	#info {
-		font-size: clamp(16px, 3vw, 18px);
+		font-size: clamp(14px, 3vw, 16px);
+		margin-bottom: 10px;
+	}
+
+	#restartBtn {
+		font-size: clamp(14px, 3vw, 16px);
+		padding: 8px 16px;
 	}
 
 	.fixed-info-btn {
