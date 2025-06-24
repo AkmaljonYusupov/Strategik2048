@@ -10,6 +10,8 @@ body {
 	align-items: center;
 	font-family: 'Inter', sans-serif;
 	/* Shrift oilasi */
+	overscroll-behavior: none;
+	/* Mobil scroll yangilanishini o'chirish */
 }
 
 /* O'yin konteyneri */

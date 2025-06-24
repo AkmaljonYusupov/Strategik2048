@@ -49,11 +49,27 @@ function updateTime() {
 setInterval(updateTime, 1000) // Har soniyada yangilash
 updateTime()
 
+// Mobil scroll yangilanishini o'chirish
+document.addEventListener(
+	'touchmove',
+	e => {
+		// Faqat o'yin maydonidagi surishni o'yin harakatlari sifatida qabul qilamiz
+		if (e.target.closest('#gameContainer')) return
+		e.preventDefault() // Sahifa yangilanishini bloklash
+	},
+	{ passive: false }
+)
+
 // O'yin taxtasini boshlash (sahifani yangilamasdan)
 function initBoard() {
 	gameBoard.innerHTML = '' // Taxtani tozalash
+	score = 0 // Ochkoni nollash
+	scoreElement.textContent = score
+	gameOver = false
+	gameOverDisplay.style.display = 'none'
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
+			board[i][j] = 0 // Taxtani tozalash
 			const tile = document.createElement('div')
 			tile.classList.add('tile')
 			tile.dataset.value = board[i][j]
@@ -293,15 +309,6 @@ document.addEventListener('touchend', e => {
 
 // Qayta boshlash tugmasi (sahifani yangilamasdan)
 restartBtn.addEventListener('click', () => {
-	score = 0
-	gameOver = false
-	scoreElement.textContent = score
-	gameOverDisplay.style.display = 'none'
-	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < 4; j++) {
-			board[i][j] = 0 // Taxtani tozalash
-		}
-	}
 	initBoard() // O'yinni qayta boshlash
 })
 
