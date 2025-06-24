@@ -49,12 +49,11 @@ function updateTime() {
 setInterval(updateTime, 1000) // Har soniyada yangilash
 updateTime()
 
-// O'yin taxtasini boshlash
+// O'yin taxtasini boshlash (sahifani yangilamasdan)
 function initBoard() {
 	gameBoard.innerHTML = '' // Taxtani tozalash
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
-			board[i][j] = 0 // Taxtani nollar bilan to'ldirish
 			const tile = document.createElement('div')
 			tile.classList.add('tile')
 			tile.dataset.value = board[i][j]
@@ -62,10 +61,6 @@ function initBoard() {
 			gameBoard.appendChild(tile) // Plitkalarni qo'shish
 		}
 	}
-	score = 0 // Ochko noldan boshlanadi
-	scoreElement.textContent = score
-	gameOver = false // O'yin tugamagan
-	gameOverDisplay.style.display = 'none' // Tugash oynasini yashirish
 	addRandomTile() // 2 ta tasodifiy plitka qo'shish
 	addRandomTile()
 	updateBoard()
@@ -296,9 +291,18 @@ document.addEventListener('touchend', e => {
 	}
 })
 
-// Qayta boshlash tugmasi
+// Qayta boshlash tugmasi (sahifani yangilamasdan)
 restartBtn.addEventListener('click', () => {
-	initBoard() // Sahifani yangilamasdan o'yinni qayta boshlash
+	score = 0
+	gameOver = false
+	scoreElement.textContent = score
+	gameOverDisplay.style.display = 'none'
+	for (let i = 0; i < 4; i++) {
+		for (let j = 0; j < 4; j++) {
+			board[i][j] = 0 // Taxtani tozalash
+		}
+	}
+	initBoard() // O'yinni qayta boshlash
 })
 
-initBoard() // O'yinni boshlash
+initBoard() // O'yinni boshlash (sahifani yangilamasdan)
