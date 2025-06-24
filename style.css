@@ -283,8 +283,11 @@ body {
 	}
 
 	#info {
+		width: 100%;
 		font-size: clamp(14px, 3vw, 16px);
 		margin-bottom: 10px;
+		display: flex;
+		justify-content: space-between;
 	}
 
 	#restartBtn {
