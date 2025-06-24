@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Strategik 2048</title>
+	<!-- Bootstrap CSS kutubxonasi -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Tailwind CSS kutubxonasi -->
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+	<!-- Bootstrap ikonkalari -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+	<!-- Inter shrift oilasi -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<!-- O'yin konteyneri -->
+	<div id="gameContainer" class="container">
+		<!-- Ochko va eng yuqori natija ko'rsatiladigan qism -->
+		<div id="info">
+			<span>Ochko: <span id="score">0</span></span>
+			<span>Eng yuqori: <span id="highScore">0</span></span>
+		</div>
+		<!-- O'yin taxtasi -->
+		<div id="gameBoard"></div>
+		<!-- O'yin tugash oynasi -->
+		<div id="gameOver" class="p-4">
+			<h2 id="gameOverText"></h2>
+			<p>Ochko: <span id="finalScore">0</span></p>
+			<p id="rating"></p>
+		</div>
+		<!-- Qayta boshlash tugmasi -->
+		<button id="restartBtn" class="btn btn-primary mt-3">Qayta boshlash</button>
+	</div>
+	<!-- Ma'lumot tugmasi (fixed, dumaloq) -->
+	<button class="btn btn-primary fixed-info-btn" data-bs-toggle="offcanvas" data-bs-target="#infoOffcanvas">
+		<i class="bi bi-info-circle"></i>
+	</button>
+	<!-- Offcanvas (o'ngdan ochiladigan ma'lumotlar paneli) -->
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="infoOffcanvas" data-bs-placement="end">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title"><i class="bi bi-info-circle-fill"></i> Ma'lumotlar</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<span><i class="bi bi-copyright"></i> Muallif: Akmaljon Yusupov</span>
+			<span><i class="bi bi-clock-fill"></i> <span id="currentTime">24.06.2025 13:32:00</span></span>
+			<span class="contact-container">
+				<i class="bi bi-telephone-fill"></i>
+				<a href="tel:+998885700209" class="data-mobile-hidden">+998 88 570 02 09</a>
+			</span>
+			<span class="contact-container">
+				<i class="bi bi-telegram"></i>
+				<a href="https://t.me/AkmaljonYusupov" class="data-mobile-hidden">@AkmaljonYusupov</a>
+			</span>
+		</div>
+	</div>
+	<!-- Bootstrap JavaScript kutubxonasi -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="./script.js">
+
+	</script>
+</body>
+
+</html>
