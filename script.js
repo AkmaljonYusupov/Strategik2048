@@ -73,8 +73,7 @@ function saveState() {
 		board: board.map(row => [...row]), // Taxtaning nusxasi
 		score: score, // Ochko nusxasi
 	})
-	undoBtn.disabled = false // Orqaga qaytarish tugmasini faollashtirish
-	undoBtn.style.pointerEvents = 'auto' // Tegnishga ruxsat berish
+	updateUndoButtonState() // Tugma holatini yangilash
 }
 
 // Oxirgi harakatni qaytarish
@@ -88,8 +87,14 @@ function undoMove() {
 	}
 	score = lastState.score // Ochkoni tiklash
 	updateBoard() // Taxtani yangilash
-	undoBtn.disabled = undoStack.length === 0 // Stack bo'sh bo'lsa tugmani o'chirish
-	undoBtn.style.pointerEvents = undoStack.length === 0 ? 'none' : 'auto' // Tegnishni boshqarish
+}
+
+// Orqaga qaytarish tugmasi holatini yangilash
+function updateUndoButtonState() {
+	const isDisabled = undoStack.length === 0
+	undoBtn.disabled = isDisabled // Tugmani o'chirish yoki yoqish
+	undoBtn.style.pointerEvents = isDisabled ? 'none' : 'auto' // Tegnishni boshqarish
+	undoBtn.style.opacity = isDisabled ? '0.5' : '1' // Vizual ko'rsatkich
 }
 
 // O'yin taxtasini boshlash (sahifani yangilamasdan)
@@ -100,8 +105,7 @@ function initBoard() {
 	gameOver = false // O'yin holatini tiklash
 	gameOverDisplay.style.display = 'none' // Tugash oynasini yashirish
 	undoStack = [] // Undo stackni tozalash
-	undoBtn.disabled = true // Orqaga qaytarish tugmasini o'chirish
-	undoBtn.style.pointerEvents = 'none' // Tegnishni bloklash
+	updateUndoButtonState() // Tugma holatini yangilash
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
 			board[i][j] = 0 // Taxtani nollar bilan to'ldirish
@@ -165,8 +169,7 @@ function updateBoard() {
 		gameOverDisplay.style.display = 'block'
 		loseSound.play().catch(() => {})
 	}
-	undoBtn.disabled = undoStack.length === 0 // Undo tugmasini yangilash
-	undoBtn.style.pointerEvents = undoStack.length === 0 ? 'none' : 'auto' // Tegnishni boshqarish
+	updateUndoButtonState() // Tugma holatini yangilash
 }
 
 // Reytingni hisoblash
@@ -303,6 +306,16 @@ function checkLose() {
 	return true // Hech qanday harakat qolmagan
 }
 
+// Tugma hodisalarini boshqarish funksiyasi (desktop va mobil uchun)
+function handleButtonAction(action) {
+	return function (e) {
+		if (e.type === 'touchend' || e.type === 'touchstart') {
+			e.preventDefault() // Mobil teginishda scroll yoki standart hodisalarni bloklash
+		}
+		action() // Tegishli funksiyani chaqirish
+	}
+}
+
 // Klaviatura hodisalari
 document.addEventListener('keydown', e => {
 	if (gameOver) return // O'yin tugagan bo'lsa hech narsa qilmaydi
@@ -348,21 +361,13 @@ document.addEventListener('touchend', e => {
 	}
 })
 
-// Tugma hodisalarini boshqarish funksiyasi (desktop va mobil uchun)
-function handleButtonAction(action) {
-	return function (e) {
-		if (e.type === 'touchend') e.preventDefault() // Mobil teginishda scrollni bloklash
-		action() // Tegishli funksiyani chaqirish
-	}
-}
-
 // Qayta boshlash tugmasi hodisalari
 restartBtn.addEventListener('click', handleButtonAction(initBoard))
-restartBtn.addEventListener('touchend', handleButtonAction(initBoard))
+restartBtn.addEventListener('touchstart', handleButtonAction(initBoard))
 
 // Orqaga qaytarish tugmasi hodisalari
 undoBtn.addEventListener('click', handleButtonAction(undoMove))
-undoBtn.addEventListener('touchend', handleButtonAction(undoMove))
+undoBtn.addEventListener('touchstart', handleButtonAction(undoMove))
 
 // O'yinni boshlash
 initBoard()
