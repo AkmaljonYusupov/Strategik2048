@@ -74,6 +74,7 @@ function saveState() {
 		score: score, // Ochko nusxasi
 	})
 	undoBtn.disabled = false // Orqaga qaytarish tugmasini faollashtirish
+	undoBtn.style.pointerEvents = 'auto' // Tegnishga ruxsat berish
 }
 
 // Oxirgi harakatni qaytarish
@@ -88,6 +89,7 @@ function undoMove() {
 	score = lastState.score // Ochkoni tiklash
 	updateBoard() // Taxtani yangilash
 	undoBtn.disabled = undoStack.length === 0 // Stack bo'sh bo'lsa tugmani o'chirish
+	undoBtn.style.pointerEvents = undoStack.length === 0 ? 'none' : 'auto' // Tegnishni boshqarish
 }
 
 // O'yin taxtasini boshlash (sahifani yangilamasdan)
@@ -99,6 +101,7 @@ function initBoard() {
 	gameOverDisplay.style.display = 'none' // Tugash oynasini yashirish
 	undoStack = [] // Undo stackni tozalash
 	undoBtn.disabled = true // Orqaga qaytarish tugmasini o'chirish
+	undoBtn.style.pointerEvents = 'none' // Tegnishni bloklash
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
 			board[i][j] = 0 // Taxtani nollar bilan to'ldirish
@@ -162,6 +165,8 @@ function updateBoard() {
 		gameOverDisplay.style.display = 'block'
 		loseSound.play().catch(() => {})
 	}
+	undoBtn.disabled = undoStack.length === 0 // Undo tugmasini yangilash
+	undoBtn.style.pointerEvents = undoStack.length === 0 ? 'none' : 'auto' // Tegnishni boshqarish
 }
 
 // Reytingni hisoblash
@@ -343,15 +348,21 @@ document.addEventListener('touchend', e => {
 	}
 })
 
-// Qayta boshlash tugmasi hodisasi
-restartBtn.addEventListener('click', () => {
-	initBoard() // O'yinni qayta boshlash
-})
+// Tugma hodisalarini boshqarish funksiyasi (desktop va mobil uchun)
+function handleButtonAction(action) {
+	return function (e) {
+		if (e.type === 'touchend') e.preventDefault() // Mobil teginishda scrollni bloklash
+		action() // Tegishli funksiyani chaqirish
+	}
+}
 
-// Orqaga qaytarish tugmasi hodisasi
-undoBtn.addEventListener('click', () => {
-	undoMove() // Oxirgi harakatni qaytarish
-})
+// Qayta boshlash tugmasi hodisalari
+restartBtn.addEventListener('click', handleButtonAction(initBoard))
+restartBtn.addEventListener('touchend', handleButtonAction(initBoard))
+
+// Orqaga qaytarish tugmasi hodisalari
+undoBtn.addEventListener('click', handleButtonAction(undoMove))
+undoBtn.addEventListener('touchend', handleButtonAction(undoMove))
 
 // O'yinni boshlash
 initBoard()
