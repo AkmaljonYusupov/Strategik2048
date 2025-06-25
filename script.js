@@ -1,13 +1,15 @@
-// 4x4 o'yin taxtasi massivi
 const board = [
 	[0, 0, 0, 0],
 	[0, 0, 0, 0],
 	[0, 0, 0, 0],
 	[0, 0, 0, 0],
 ]
-let score = 0 // Joriy ochko
-let highScore = localStorage.getItem('highScore') || 0 // Eng yuqori natija
-let gameOver = false // O'yin tugaganligi holati
+let score = 0
+let highScore = localStorage.getItem('highScore') || 0
+let gameOver = false
+let previousBoard = []
+let previousScore = 0
+
 // DOM elementlari
 const gameBoard = document.getElementById('gameBoard')
 const scoreElement = document.getElementById('score')
@@ -17,6 +19,7 @@ const gameOverText = document.getElementById('gameOverText')
 const finalScoreDisplay = document.getElementById('finalScore')
 const ratingElement = document.getElementById('rating')
 const restartBtn = document.getElementById('restartBtn')
+const undoBtn = document.getElementById('undoBtn')
 const currentTimeElement = document.getElementById('currentTime')
 
 // Ovoz effektlari
@@ -32,10 +35,8 @@ const largeMergeSound = new Audio(
 const winSound = new Audio('https://www.soundjay.com/misc/sounds/success-1.mp3')
 const loseSound = new Audio('https://www.soundjay.com/misc/sounds/fail-1.mp3')
 
-// Eng yuqori natijani ko'rsatish
 highScoreElement.textContent = highScore
 
-// Real vaqtni yangilash funksiyasi
 function updateTime() {
 	const now = new Date()
 	const day = String(now.getDate()).padStart(2, '0')
@@ -46,43 +47,59 @@ function updateTime() {
 	const seconds = String(now.getSeconds()).padStart(2, '0')
 	currentTimeElement.textContent = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`
 }
-setInterval(updateTime, 1000) // Har soniyada yangilash
+setInterval(updateTime, 1000)
 updateTime()
 
-// Mobil scroll yangilanishini o'chirish
 document.addEventListener(
 	'touchmove',
 	e => {
-		// Faqat o'yin maydonidagi surishni o'yin harakatlari sifatida qabul qilamiz
 		if (e.target.closest('#gameContainer')) return
-		e.preventDefault() // Sahifa yangilanishini bloklash
+		e.preventDefault()
 	},
 	{ passive: false }
 )
 
-// O'yin taxtasini boshlash (sahifani yangilamasdan)
+function saveState() {
+	previousBoard = board.map(row => [...row])
+	previousScore = score
+}
+
+function undoMove() {
+	if (!previousBoard.length) return
+	for (let i = 0; i < 4; i++) {
+		for (let j = 0; j < 4; j++) {
+			board[i][j] = previousBoard[i][j]
+		}
+	}
+	score = previousScore
+	updateBoard()
+	previousBoard = []
+	undoBtn.disabled = true
+}
+
 function initBoard() {
-	gameBoard.innerHTML = '' // Taxtani tozalash
-	score = 0 // Ochkoni nollash
+	gameBoard.innerHTML = ''
+	score = 0
 	scoreElement.textContent = score
 	gameOver = false
 	gameOverDisplay.style.display = 'none'
+	previousBoard = []
+	undoBtn.disabled = true
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
-			board[i][j] = 0 // Taxtani tozalash
+			board[i][j] = 0
 			const tile = document.createElement('div')
 			tile.classList.add('tile')
 			tile.dataset.value = board[i][j]
 			tile.textContent = board[i][j] !== 0 ? board[i][j] : ''
-			gameBoard.appendChild(tile) // Plitkalarni qo'shish
+			gameBoard.appendChild(tile)
 		}
 	}
-	addRandomTile() // 2 ta tasodifiy plitka qo'shish
+	addRandomTile()
 	addRandomTile()
 	updateBoard()
 }
 
-// Tasodifiy plitka qo'shish (2 yoki 4)
 function addRandomTile() {
 	const emptyCells = []
 	for (let i = 0; i < 4; i++) {
@@ -92,11 +109,10 @@ function addRandomTile() {
 	}
 	if (emptyCells.length > 0) {
 		const { i, j } = emptyCells[Math.floor(Math.random() * emptyCells.length)]
-		board[i][j] = Math.random() < 0.9 ? 2 : 4 // 90% 2, 10% 4
+		board[i][j] = Math.random() < 0.9 ? 2 : 4
 	}
 }
 
-// O'yin taxtasini yangilash
 function updateBoard() {
 	const tiles = document.querySelectorAll('.tile')
 	tiles.forEach((tile, index) => {
@@ -105,15 +121,14 @@ function updateBoard() {
 		tile.dataset.value = board[i][j]
 		tile.textContent = board[i][j] !== 0 ? board[i][j] : ''
 		tile.classList.remove('new', 'merged')
-		if (board[i][j] !== 0) tile.classList.add('new') // Yangi plitka animatsiyasi
+		if (board[i][j] !== 0) tile.classList.add('new')
 	})
-	scoreElement.textContent = score // Ochko yangilash
+	scoreElement.textContent = score
 	if (score > highScore) {
 		highScore = score
 		highScoreElement.textContent = highScore
-		localStorage.setItem('highScore', highScore) // Eng yuqori natijani saqlash
+		localStorage.setItem('highScore', highScore)
 	}
-	// Yutish holatini tekshirish
 	if (checkWin()) {
 		gameOver = true
 		gameOverText.textContent = 'Tabriklaymiz! Siz 2048 ga erishdingiz!'
@@ -121,7 +136,6 @@ function updateBoard() {
 		ratingElement.textContent = `Reyting: ${calculateRating()}`
 		gameOverDisplay.style.display = 'block'
 		winSound.play().catch(() => {})
-		// Yutqazish holatini tekshirish
 	} else if (checkLose()) {
 		gameOver = true
 		gameOverText.textContent = "O'yin tugadi!"
@@ -132,7 +146,6 @@ function updateBoard() {
 	}
 }
 
-// Reytingni hisoblash
 function calculateRating() {
 	const maxScore = 2048 * 2
 	const scorePercentage = (score / maxScore) * 100
@@ -141,36 +154,33 @@ function calculateRating() {
 	return '★'
 }
 
-// Birlashish ovozini ijro etish
 function playMergeSound(value) {
 	if (value <= 4) smallMergeSound.play().catch(() => {})
 	else if (value <= 32) mediumMergeSound.play().catch(() => {})
 	else largeMergeSound.play().catch(() => {})
 }
 
-// Chapga harakat
 function moveLeft() {
 	let moved = false
 	for (let i = 0; i < 4; i++) {
-		let row = board[i].filter(val => val !== 0) // Bo'sh bo'lmagan plitkalar
+		let row = board[i].filter(val => val !== 0)
 		for (let j = 0; j < row.length - 1; j++) {
 			if (row[j] === row[j + 1]) {
 				const mergedValue = row[j] * 2
 				row[j] = mergedValue
-				score += mergedValue // Ochko qo'shish
+				score += mergedValue
 				playMergeSound(mergedValue)
 				row.splice(j + 1, 1)
 				j--
 			}
 		}
-		while (row.length < 4) row.push(0) // Bo'sh joylarni 0 bilan to'ldirish
+		while (row.length < 4) row.push(0)
 		if (board[i].join() !== row.join()) moved = true
 		board[i] = row
 	}
 	return moved
 }
 
-// O'ngga harakat
 function moveRight() {
 	let moved = false
 	for (let i = 0; i < 4; i++) {
@@ -192,7 +202,6 @@ function moveRight() {
 	return moved
 }
 
-// Yuqoriga harakat
 function moveUp() {
 	let moved = false
 	for (let j = 0; j < 4; j++) {
@@ -218,7 +227,6 @@ function moveUp() {
 	return moved
 }
 
-// Pastga harakat
 function moveDown() {
 	let moved = false
 	for (let j = 0; j < 4; j++) {
@@ -244,7 +252,6 @@ function moveDown() {
 	return moved
 }
 
-// Yutish holatini tekshirish (2048 plitkasi)
 function checkWin() {
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
@@ -254,7 +261,6 @@ function checkWin() {
 	return false
 }
 
-// Yutqazish holatini tekshirish (harakat qolmasa)
 function checkLose() {
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
@@ -266,21 +272,21 @@ function checkLose() {
 	return true
 }
 
-// Klaviatura hodisalari
 document.addEventListener('keydown', e => {
 	if (gameOver) return
+	saveState()
 	let moved = false
 	if (e.key === 'ArrowLeft') moved = moveLeft()
 	else if (e.key === 'ArrowRight') moved = moveRight()
 	else if (e.key === 'ArrowUp') moved = moveUp()
 	else if (e.key === 'ArrowDown') moved = moveDown()
 	if (moved) {
-		addRandomTile() // Harakat bo'lsa yangi plitka qo'shish
+		addRandomTile()
 		updateBoard()
+		undoBtn.disabled = false
 	}
 })
 
-// Mobil surish hodisalari
 let touchStartX = 0
 let touchStartY = 0
 document.addEventListener('touchstart', e => {
@@ -289,6 +295,7 @@ document.addEventListener('touchstart', e => {
 })
 document.addEventListener('touchend', e => {
 	if (gameOver) return
+	saveState()
 	const touchEndX = e.changedTouches[0].clientX
 	const touchEndY = e.changedTouches[0].clientY
 	const dx = touchEndX - touchStartX
@@ -304,12 +311,16 @@ document.addEventListener('touchend', e => {
 	if (moved) {
 		addRandomTile()
 		updateBoard()
+		undoBtn.disabled = false
 	}
 })
 
-// Qayta boshlash tugmasi (sahifani yangilamasdan)
 restartBtn.addEventListener('click', () => {
-	initBoard() // O'yinni qayta boshlash
+	initBoard()
 })
 
-initBoard() // O'yinni boshlash (sahifani yangilamasdan)
+undoBtn.addEventListener('click', () => {
+	undoMove()
+})
+
+initBoard()

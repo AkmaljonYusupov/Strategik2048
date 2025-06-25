@@ -3,25 +3,21 @@ body {
 	margin: 0;
 	padding: 0;
 	background: linear-gradient(to bottom, #f3e7e9, #e3eeff);
-	/* Gradient fon */
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	font-family: 'Inter', sans-serif;
-	/* Shrift oilasi */
 	overscroll-behavior: none;
-	/* Mobil scroll yangilanishini o'chirish */
 	overflow: hidden;
-	/* To'liq ekran rejimi uchun */
 }
 
 /* O'yin konteyneri */
 #gameContainer {
 	max-width: 600px;
 	width: 100%;
-	padding: 15px;
+	padding: 5px;
 	text-align: center;
 }
 
@@ -29,33 +25,27 @@ body {
 #gameBoard {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	/* 4 ta ustun */
 	gap: 12px;
 	background: #bbada0;
-	/* Taxta foni */
 	padding: 12px;
 	border-radius: 12px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	/* Soyali effekt */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Har bir plitka (tile) stilizatsiyasi */
+/* Har bir plitka (tile) */
 .tile {
 	width: 100%;
 	aspect-ratio: 1;
-	/* Kvadrat shakl */
 	background: #cdc1b4;
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: clamp(20px, 5vw, 28px);
-	/* Moslashuvchan shrift */
-	font-weight: 500;
+	font-size: clamp(24px, 6vw, 32px);
+	font-weight: 700;
 	color: #776e65;
-	transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease,
-		box-shadow 0.2s ease;
-	/* Animatsiyalar */
+	transition: transform 0.2s ease-in-out, background 0.2s ease-in-out,
+		color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 	text-align: center;
 	line-height: 1;
 }
@@ -65,57 +55,46 @@ body {
 	background: #cdc1b4;
 	color: #cdc1b4;
 }
-
 .tile[data-value='2'] {
 	background: #eee4da;
 	color: #776e65;
 }
-
 .tile[data-value='4'] {
 	background: #ede0c8;
 	color: #776e65;
 }
-
 .tile[data-value='8'] {
 	background: #f2b179;
 	color: #f9f6f2;
 }
-
 .tile[data-value='16'] {
 	background: #f59563;
 	color: #f9f6f2;
 }
-
 .tile[data-value='32'] {
 	background: #f67c5f;
 	color: #f9f6f2;
 }
-
 .tile[data-value='64'] {
 	background: #f65e3b;
 	color: #f9f6f2;
 }
-
 .tile[data-value='128'] {
 	background: #edcf72;
 	color: #f9f6f2;
 }
-
 .tile[data-value='256'] {
 	background: #edcc61;
 	color: #f9f6f2;
 }
-
 .tile[data-value='512'] {
 	background: #edc850;
 	color: #f9f6f2;
 }
-
 .tile[data-value='1024'] {
 	background: #edc53f;
 	color: #f9f6f2;
 }
-
 .tile[data-value='2048'] {
 	background: #edc22e;
 	color: #f9f6f2;
@@ -126,7 +105,6 @@ body {
 	transform: scale(0.1);
 	animation: pop 0.2s forwards;
 }
-
 .tile.merged {
 	animation: merge 0.3s forwards, glow 0.3s forwards;
 }
@@ -135,6 +113,7 @@ body {
 #info {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	margin-bottom: 15px;
 	font-size: clamp(18px, 3.5vw, 22px);
 	color: #1a202c;
@@ -162,42 +141,34 @@ body {
 	position: fixed;
 	bottom: 20px;
 	left: 20px;
-	/* Chap past burchak */
 	z-index: 1000;
 	width: 60px;
 	height: 60px;
 	border-radius: 50%;
-	/* Dumaloq shakl */
 	padding: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 1.6rem;
-	/* Ikonka o'lchami */
 	transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .fixed-info-btn:hover {
 	transform: scale(1.1);
-	/* Hoverda kattalashadi */
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Offcanvas stilizatsiyasi */
 .offcanvas {
 	background: linear-gradient(to bottom, #f7fafc, #edf2f7);
-	/* Gradient fon */
 	border-radius: 12px 0 0 12px;
-	/* O'ngdan ochilish uchun radius */
 	padding: 8px;
 	box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
 	animation: slide-in-right 0.3s ease-out;
-	/* Ochilish animatsiyasi */
 }
 
 .offcanvas-header {
 	border-bottom: 1px solid #e2e8f0;
-	/* Sarlavha ostidagi chiziq */
 }
 
 .offcanvas-title {
@@ -212,9 +183,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 18px;
-	/* Elementlar orasidagi masofa */
 	font-size: clamp(16px, 2.8vw, 18px);
-	/* Kattalashtirilgan matn */
 	color: #1a202c;
 	text-align: center;
 }
@@ -233,7 +202,6 @@ body {
 .offcanvas i {
 	margin-right: 8px;
 	font-size: 1.5rem;
-	/* Kattalashtirilgan ikonlar */
 	transition: transform 0.2s, color 0.2s;
 }
 
@@ -254,13 +222,33 @@ body {
 	background: rgba(0, 0, 0, 0.05);
 }
 
+/* Kartochka va tugmalar uchun stillar */
+.card {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	border: none;
+}
+
+.btn {
+	font-size: clamp(14px, 2.5vw, 16px);
+	padding: 5px 16px;
+	transition: transform 0.2s;
+}
+
+.btn:hover {
+	transform: scale(1.05);
+}
+
+.btn i {
+	font-size: 1.2rem;
+}
+
 /* Mobil ekranlar uchun sozlamalar */
 @media (max-width: 400px) {
 	#gameContainer {
 		width: 100vw;
-		/* To'liq ekran eni */
 		height: 100vh;
-		/* To'liq ekran balandligi */
 		padding: 5px;
 		display: flex;
 		flex-direction: column;
@@ -272,14 +260,11 @@ body {
 		gap: 6px;
 		padding: 6px;
 		width: 100%;
-		/* To'liq eni */
 		max-width: 360px;
-		/* Maksimal eni cheklash */
 	}
 
 	.tile {
-		font-size: clamp(14px, 4vw, 18px);
-		/* Mobil uchun kichikroq shrift */
+		font-size: clamp(18px, 5vw, 22px);
 	}
 
 	#info {
@@ -290,34 +275,49 @@ body {
 		justify-content: space-between;
 	}
 
-	#restartBtn {
-		font-size: clamp(14px, 3vw, 16px);
-		padding: 8px 16px;
+	.card {
+		flex-direction: column;
+		gap: 10px;
+		padding: 10px;
+	}
+
+	.btn {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.btn i {
+		font-size: 1.4rem;
+	}
+
+	.btn-text {
+		display: none;
 	}
 
 	.fixed-info-btn {
 		width: 50px;
 		height: 50px;
-		/* Mobil uchun kichikroq */
 		font-size: 1.4rem;
 	}
 
 	.offcanvas {
 		width: 90% !important;
-		/* Mobil ekranlarda 80% eni */
 	}
 
 	.offcanvas-body {
 		margin-top: 20px;
 		font-size: clamp(14px, 2.5vw, 16px);
-		/* Mobil uchun kattalashtirilgan matn */
 		gap: 30px;
 		padding: 0px;
 	}
 
 	.offcanvas i {
 		font-size: 1.3rem;
-		/* Mobil uchun kattalashtirilgan ikonlar */
 	}
 }
 
@@ -326,7 +326,6 @@ body {
 	from {
 		transform: translateX(100%);
 	}
-
 	to {
 		transform: translateX(0);
 	}
@@ -336,7 +335,6 @@ body {
 	0% {
 		transform: scale(0.1);
 	}
-
 	100% {
 		transform: scale(1);
 	}
@@ -346,7 +344,6 @@ body {
 	0% {
 		transform: scale(1.2);
 	}
-
 	100% {
 		transform: scale(1);
 	}
@@ -356,7 +353,6 @@ body {
 	0% {
 		box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 	}
-
 	100% {
 		box-shadow: 0 0 0 rgba(255, 255, 255, 0);
 	}
