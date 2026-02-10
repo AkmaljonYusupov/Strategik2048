@@ -231,7 +231,7 @@ body {
 }
 
 .btn {
-	font-size: clamp(18px, 2.5vw, 16px);
+	font-size: clamp(14px, 2.5vw, 16px);
 	padding: 5px 16px;
 	transition: transform 0.2s;
 }
