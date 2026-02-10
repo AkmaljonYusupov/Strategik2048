@@ -28,16 +28,16 @@ const currentTimeElement = document.getElementById('currentTime') // Joriy vaqt 
 
 // Ovoz effektlari (CDN orqali yuklanadi)
 const smallMergeSound = new Audio(
-	'https://www.soundjay.com/buttons/sounds/button-09.mp3'
+	// 'https://www.soundjay.com/buttons/sounds/button-09.mp3'
 ) // Kichik birlashish (2, 4)
 const mediumMergeSound = new Audio(
-	'https://www.soundjay.com/buttons/sounds/button-10.mp3'
+	// 'https://www.soundjay.com/buttons/sounds/button-10.mp3'
 ) // O'rta birlashish (8-32)
 const largeMergeSound = new Audio(
-	'https://www.soundjay.com/buttons/sounds/button-11.mp3'
+	// 'https://www.soundjay.com/buttons/sounds/button-11.mp3'
 ) // Katta birlashish (64+)
-const winSound = new Audio('https://www.soundjay.com/misc/sounds/success-1.mp3') // Yutish ovozi
-const loseSound = new Audio('https://www.soundjay.com/misc/sounds/fail-1.mp3') // Yutqazish ovozi
+// const winSound = new Audio('https://www.soundjay.com/misc/sounds/success-1.mp3') // Yutish ovozi
+// const loseSound = new Audio('https://www.soundjay.com/misc/sounds/fail-1.mp3') // Yutqazish ovozi
 
 // Eng yuqori natijani dastlabki ko'rsatish
 highScoreElement.textContent = highScore
